@@ -1,0 +1,2 @@
+-- The canonical schema is managed by Alembic.
+-- Apply it from the project root with: alembic upgrade head
