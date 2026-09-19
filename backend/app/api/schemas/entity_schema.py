@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class EntityResponse(BaseModel):
@@ -13,6 +13,11 @@ class EntityResponse(BaseModel):
 	valid_from: Optional[date] = None
 	valid_to: Optional[date] = None
 	attributes: Dict[str, Any] = Field(default_factory=dict)
+
+	@field_validator("attributes", mode="before")
+	@classmethod
+	def default_missing_attributes(cls, value: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+		return value or {}
 
 
 class RelationshipResponse(BaseModel):
